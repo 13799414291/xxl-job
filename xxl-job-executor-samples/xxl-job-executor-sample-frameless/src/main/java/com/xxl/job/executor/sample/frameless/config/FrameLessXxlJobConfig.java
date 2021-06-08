@@ -1,7 +1,11 @@
 package com.xxl.job.executor.sample.frameless.config;
 
-import com.xxl.job.executor.sample.frameless.jobhandler.SampleXxlJob;
+import com.xxl.job.core.executor.XxlJobExecutor;
 import com.xxl.job.core.executor.impl.XxlJobSimpleExecutor;
+import com.xxl.job.core.handler.IJobHandler;
+import com.xxl.job.executor.sample.frameless.jobhandler.MyJobHandler;
+import com.xxl.job.executor.sample.frameless.jobhandler.MyXxlJob;
+import com.xxl.job.executor.sample.frameless.jobhandler.SampleXxlJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +49,10 @@ public class FrameLessXxlJobConfig {
         xxlJobExecutor.setLogRetentionDays(Integer.valueOf(xxlJobProp.getProperty("xxl.job.executor.logretentiondays")));
 
         // registry job bean
-        xxlJobExecutor.setXxlJobBeanList(Arrays.asList(new SampleXxlJob()));
+        xxlJobExecutor.setXxlJobBeanList(Arrays.asList(new SampleXxlJob(),new MyXxlJob()));
+
+        // registry job handler。名字不能重复
+        xxlJobExecutor.registJobHandler("myJobHandler2", new MyJobHandler());
 
         // start executor
         try {
